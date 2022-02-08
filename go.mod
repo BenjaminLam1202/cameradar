@@ -1,4 +1,4 @@
-module github.com/Ullaakut/cameradar/v5
+module github.com/BenjaminLam1202/cameradar
 
 go 1.14
 

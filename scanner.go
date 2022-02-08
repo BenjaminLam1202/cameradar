@@ -6,13 +6,12 @@ import (
 	"time"
 
 	"github.com/Ullaakut/disgo"
-	"github.com/Ullaakut/disgo/style"
 	curl "github.com/Ullaakut/go-curl"
 )
 
 const (
 	defaultCredentialDictionaryPath = "${GOPATH}/src/github.com/Ullaakut/cameradar/dictionaries/credentials.json"
-	defaultRouteDictionaryPath      = "${GOPATH}/src/github.com/Ullaakut/cameradar/dictionaries/routes"
+	defaultRouteDictionaryPath      = "../../dictionaries/routes"
 )
 
 // Scanner represents a cameradar scanner. It scans a network and
@@ -57,10 +56,10 @@ func New(options ...func(*Scanner)) (*Scanner, error) {
 		option(scanner)
 	}
 
-	gopath := os.Getenv("GOPATH")
-	if gopath == "" && scanner.credentialDictionaryPath == defaultCredentialDictionaryPath && scanner.routeDictionaryPath == defaultRouteDictionaryPath {
-		disgo.Errorln(style.Failure("No $GOPATH was found.\nDictionaries may not be loaded properly, please set your $GOPATH to use the default dictionaries."))
-	}
+	// gopath := os.Getenv("GOPATH")
+	// if gopath == "" && scanner.credentialDictionaryPath == defaultCredentialDictionaryPath && scanner.routeDictionaryPath == defaultRouteDictionaryPath {
+	// 	disgo.Errorln(style.Failure("No $GOPATH was found.\nDictionaries may not be loaded properly, please set your $GOPATH to use the default dictionaries."))
+	// }
 
 	scanner.credentialDictionaryPath = os.ExpandEnv(scanner.credentialDictionaryPath)
 	scanner.routeDictionaryPath = os.ExpandEnv(scanner.routeDictionaryPath)
@@ -74,11 +73,11 @@ func New(options ...func(*Scanner)) (*Scanner, error) {
 		return nil, fmt.Errorf("unable to parse target file: %v", err)
 	}
 
-	scanner.term.StartStepf("Loading credentials")
-	err = scanner.LoadCredentials()
-	if err != nil {
-		return nil, scanner.term.FailStepf("unable to load credentials dictionary: %v", err)
-	}
+	// scanner.term.StartStepf("Loading credentials")
+	// err = scanner.LoadCredentials()
+	// if err != nil {
+	// 	return nil, scanner.term.FailStepf("unable to load credentials dictionary: %v", err)
+	// }
 
 	scanner.term.StartStepf("Loading routes")
 	err = scanner.LoadRoutes()
