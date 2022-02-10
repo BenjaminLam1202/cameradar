@@ -54,7 +54,7 @@ func (s *Scanner) Attack(targets []Stream) ([]Stream, error) {
 	// For these cameras, running another route attack will solve the problem.
 	for _, stream := range streams {
 		if !stream.RouteFound || !stream.CredentialsFound || !stream.Available {
-			s.term.StartStepf("Second round of attacks")
+			s.term.StartStepf("Second round of detect")
 			streams = s.AttackRoute(streams)
 
 			s.term.StartStep("Validating that streams are accessible")
@@ -207,7 +207,7 @@ func (s *Scanner) detectAuthMethod(stream Stream) int {
 	// Perform the request.
 	err := c.Perform()
 	if err != nil {
-		s.term.Errorf("Perform failed for %q (auth %d): %v", attackURL, stream.AuthenticationType, err)
+		s.term.Infof("Try perform for %q (auth %d): %v", attackURL, stream.AuthenticationType, err)
 		return -1
 	}
 
@@ -251,7 +251,7 @@ func (s *Scanner) routeAttack(stream Stream, route string) bool {
 	// Perform the request.
 	err := c.Perform()
 	if err != nil {
-		s.term.Errorf("Perform failed for %q (auth %d): %v", attackURL, stream.AuthenticationType, err)
+		s.term.Infof("Try perform for %q (auth %d): %v", attackURL, stream.AuthenticationType, err)
 		return false
 	}
 
@@ -300,7 +300,7 @@ func (s *Scanner) credAttack(stream Stream, username string, password string) bo
 	// Perform the request.
 	err := c.Perform()
 	if err != nil {
-		s.term.Errorf("Perform failed for %q (auth %d): %v", attackURL, stream.AuthenticationType, err)
+		s.term.Infof("Try perform for %q (auth %d): %v", attackURL, stream.AuthenticationType, err)
 		return false
 	}
 
@@ -352,7 +352,7 @@ func (s *Scanner) validateStream(stream Stream) bool {
 	// Perform the request.
 	err := c.Perform()
 	if err != nil {
-		s.term.Errorf("Perform failed for %q (auth %d): %v", attackURL, stream.AuthenticationType, err)
+		s.term.Infof("Try perform for %q (auth %d): %v", attackURL, stream.AuthenticationType, err)
 		return false
 	}
 

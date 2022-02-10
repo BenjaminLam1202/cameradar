@@ -74,11 +74,11 @@ func main() {
 	if err != nil {
 		printErr(err)
 	}
-	Result, err := c.Attack(scanResult)
-	if err != nil {
-		printErr(err)
-	}
-	c.PrintStreams(Result)
+	// Result, err := c.Attack(scanResult)
+	// if err != nil {
+	// 	printErr(err)
+	// }
+	c.PrintStreams(scanResult)
 }
 
 func printErr(err error) {
