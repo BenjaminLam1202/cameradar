@@ -251,7 +251,7 @@ func (s *Scanner) routeAttack(stream Stream, route string) bool {
 	// Perform the request.
 	err := c.Perform()
 	if err != nil {
-		// s.term.Errorf("Perform failed for %q (auth %d): %v", attackURL, stream.AuthenticationType, err)
+		s.term.Errorf("Perform failed for %q (auth %d): %v", attackURL, stream.AuthenticationType, err)
 		return false
 	}
 
