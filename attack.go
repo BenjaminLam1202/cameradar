@@ -41,19 +41,19 @@ func (s *Scanner) Attack(targets []Stream) ([]Stream, error) {
 	s.term.StartStepf("Detect routes of %d streams", len(targets))
 	streams := s.AttackRoute(targets)
 
-	// s.term.StartStepf("Attempting to detect authentication methods of %d streams", len(targets))
-	// streams = s.DetectAuthMethods(streams)
+	s.term.StartStepf("Attempting to detect authentication methods of %d streams", len(targets))
+	streams = s.DetectAuthMethods(streams)
 
 	// s.term.StartStepf("Attacking credentials of %d streams", len(targets))
 	// streams = s.AttackCredentials(streams)
 
-	// s.term.StartStep("Validating that streams are accessible")
-	// streams = s.ValidateStreams(streams)
+	s.term.StartStep("Validating that streams are accessible")
+	streams = s.ValidateStreams(streams)
 
 	// But some cameras run GST RTSP Server which prioritizes 401 over 404 contrary to most cameras.
 	// For these cameras, running another route attack will solve the problem.
 	for _, stream := range streams {
-		if !stream.RouteFound {
+		if !stream.RouteFound || !stream.CredentialsFound || !stream.Available {
 			s.term.StartStepf("Second round of attacks")
 			streams = s.AttackRoute(streams)
 
